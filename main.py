@@ -138,13 +138,6 @@ def food_casual(district_list, food_type, use_admissions=False):
     final[food_type]=temp
     return pd.DataFrame(final)  
 
-district_list = ['Adan Yabaal', 'Caluula', 'Jowhar', 'Kurtunwaarey', 'Luuq', 'Qandala']
-print(food_casual(district_list,"maize",False))
-print(food_casual(['Iskushuban'],"maize",True))
-print(food_casual(['Ceel Waaq', 'Jamaame', 'Qansax Dheere'],"rice",False))
-print(food_casual(['Jariiban'],"rice",True))
-
-
 prevalence_df = pd.read_csv('prevalence_estimates.csv', parse_dates=['date'])
 
 # reading consumer price index data
@@ -337,7 +330,19 @@ predicted_increase = [0 if x<y else 1 for x in predictions                for y 
 acc = accuracy_score(increase, predicted_increase)
 
 #Print model scores
+print('-----------------------')
+print('Model scores:')
 print("Mean Absolute Error RF: ", MAE, ", accuracy RF: ", acc)
+print('-----------------------')
+
+
+print("Causality:")
+district_list = ['Adan Yabaal', 'Caluula', 'Jowhar', 'Kurtunwaarey', 'Luuq', 'Qandala']
+print(food_casual(district_list,"maize",False))
+print(food_casual(['Iskushuban'],"maize",True))
+print(food_casual(['Ceel Waaq', 'Jamaame', 'Qansax Dheere'],"rice",False))
+print(food_casual(['Jariiban'],"rice",True))
+print('-----------------------')
 
 def plot_feature_importances(model, columns):
     feat_importances = pd.Series(model.feature_importances_, index=columns)
