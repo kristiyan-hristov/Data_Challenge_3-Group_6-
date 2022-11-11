@@ -14,9 +14,6 @@ Now in your new enviroment you can install the needed libraries. Simply paste th
 conda install -c conda-forge statsmodels
 pip install -U scikit-learn
 pip install dash
-pip install pandas
-pip install plotly
-pip install numpy
 pip install matplotlib
 ```
 ## Run the code
@@ -29,3 +26,6 @@ And then simply type:
 python main.py
 ```
 ## Results
+In the terminal you will see a link - http://127.0.0.1:8050
+By opening it an a browser of your choosing you will see our interactive dashboard with the visualizations of the results. 
+
