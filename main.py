@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Sep 28 17:02:13 2022
-
-@author: User
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Sun Sep 18 23:03:14 2022
 
 @author: User
@@ -21,7 +14,6 @@ from statsmodels.tsa.stattools import grangercausalitytests
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
 import plotly
 import plotly.express as px  # (version 4.7.0 or higher)
 from dash import dcc, html, Input, Output  # pip install dash (version 2.0.0 or higher)
@@ -31,9 +23,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier, XGBRegressor
 from sklearn.metrics import mean_absolute_error, accuracy_score, confusion_matrix as cm, accuracy_score
-from sklearn.linear_model import Lasso
 from sklearn import preprocessing
 import math
 import random 
@@ -43,8 +33,6 @@ from sklearn.metrics import mean_absolute_error, accuracy_score
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.stattools import grangercausalitytests
 
-your_datapath = ''
-
 def district_analysis(district, food, use_admissions):
     """Takes the name of the region for the analysis and the food of interest,
     accepts 'maize','milk','oil' and 'rice'. use_admissions == True 
@@ -53,7 +41,7 @@ def district_analysis(district, food, use_admissions):
     #Reading in relevant datasets and merging them
     #If the next row is uncommented you can use the faulty first dataset, which ended up on the poster
     #district_regions = pd.read_csv(your_datapath + 'districts_regions.csv')
-    district_regions = pd.read_csv(your_datapath + 'districts_regions_updated.csv')
+    district_regions = pd.read_csv('districts_regions_updated.csv')
     
     correction={'Bulo Burto':"Hiraan","Gebiley":"Woqooyi Galbeed",
                 "Hargeysa":"Woqooyi Galbeed","Berbera":"Woqooyi Galbeed"}
@@ -68,16 +56,16 @@ def district_analysis(district, food, use_admissions):
     
     district_regions["Region"]= district_regions["district"].apply(correct)
 
-    prevalence_df = pd.read_csv(your_datapath + 'prevalence_estimates.csv', parse_dates=['date'])
+    prevalence_df = pd.read_csv('prevalence_estimates.csv', parse_dates=['date'])
     prevalence_df = prevalence_df[['date','district','GAM','SAM']]
     prevalence_df = prevalence_df.merge(district_regions)
 
-    admissions = pd.read_csv(your_datapath + 'admissions.csv')
+    admissions = pd.read_csv('admissions.csv')
     admissions = admissions[['date','district','SAM_admissions']]
     admissions = admissions.merge(district_regions)
     admissions = admissions.dropna()
 
-    food_prices = pd.read_csv(your_datapath + 'food_prices_districts.csv', parse_dates=['date'])
+    food_prices = pd.read_csv('food_prices_districts.csv', parse_dates=['date'])
     food_prices = food_prices.drop(['Unnamed: 0'], axis=1)
     food_prices = food_prices[(food_prices['date'] < '2022-01-01')]
     food_prices_filtered = food_prices[['Region','Product','date','Open','Close','High','Low']]
